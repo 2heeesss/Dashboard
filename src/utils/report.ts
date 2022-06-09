@@ -53,6 +53,17 @@ class Report {
 
     return +this.rowData[lastIdx][idx] - +this.rowData[lastIdx - 1][idx];
   }
+
+  getChartData() {
+    this.sortRowData();
+    return this.rowData.map((val) => {
+      return {
+        time: val[0],
+        'Total Event Count': +val[1],
+        'Unique Event Count': +val[2],
+      };
+    });
+  }
 }
 
 export default Report;

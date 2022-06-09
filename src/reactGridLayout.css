@@ -1,0 +1,28 @@
+@import '../node_modules/react-grid-layout/css/styles.css';
+@import '../node_modules/react-resizable/css/styles.css';
+
+.react-grid-item.react-grid-placeholder {
+  background: steelblue;
+}
+
+.react-resizable-handle {
+  background-image: none;
+  background-color: steelblue;
+  text-align: center;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  right: 0;
+  bottom: 0;
+
+  content: '\f07d';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  transform: rotate(-45deg);
+  color: white;
+  border: none;
+
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}

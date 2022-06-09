@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import FetchData from './report.type';
 
 const USER_EVENT_CNT_IDX = 1;
@@ -25,7 +26,9 @@ class Report {
         (a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime()
       );
     }
-    return this;
+    if (this.label === 'abx:ref_host') {
+      return this.rowData.sort((a, b) => +b[1] - +a[1]);
+    }
   }
 
   getDataLabel() {
@@ -56,13 +59,33 @@ class Report {
 
   getChartData() {
     this.sortRowData();
-    return this.rowData.map((val) => {
-      return {
-        time: val[0],
-        'Total Event Count': +val[1],
-        'Unique Event Count': +val[2],
-      };
-    });
+
+    if (this.label === 'Daily') {
+      return this.rowData.map((val) => {
+        return {
+          time: val[0],
+          'Total Event Count': +val[1],
+          'Unique Event Count': +val[2],
+        };
+      });
+    }
+    if (this.label === 'abx:ref_host') {
+      const topData = this.rowData
+        .filter((_, idx) => idx < 4)
+        .map((val) => {
+          return {
+            name: val[0],
+            value: +val[1],
+          };
+        });
+
+      const etcCnt = this.rowData
+        .filter((_, idx) => idx >= 4)
+        .map((val) => +val[1])
+        .reduce((acc, cur) => acc + cur, 0);
+
+      return [...topData, { name: 'etc', value: etcCnt }];
+    }
   }
 }
 

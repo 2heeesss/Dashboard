@@ -4,6 +4,7 @@ import GridLayout from 'react-grid-layout';
 import styled from 'styled-components';
 import SummaryWidget from '../modules/SummaryWidget';
 import SerialChartWidget from '../modules/SerialChartWidget';
+import PieChartWidget from '../modules/PieChartWidget';
 
 const WidgetContainer = styled.div`
   background-color: white;
@@ -17,7 +18,8 @@ function Dashboard() {
   const layout = [
     { i: 'connectionUser', x: 0, y: 0, w: 5, h: 5, minH: 4, minW: 3 },
     { i: 'connectionCnt', x: 5, y: 0, w: 5, h: 5, minH: 4, minW: 3 },
-    { i: 'serial', x: 0, y: 5, w: 6, h: 10, minH: 4, minW: 6 },
+    { i: 'serial', x: 10, y: 5, w: 6, h: 10, minH: 4, minW: 6 },
+    { i: 'pie', x: 0, y: 5, w: 6, h: 10, minH: 9, minW: 4 },
   ];
   return (
     <div>
@@ -32,6 +34,9 @@ function Dashboard() {
 
         <WidgetContainer key="serial">
           <SerialChartWidget />
+        </WidgetContainer>
+        <WidgetContainer key="pie">
+          <PieChartWidget />
         </WidgetContainer>
       </GridLayout>
     </div>

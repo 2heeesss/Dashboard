@@ -27,6 +27,7 @@
     "react/react-in-jsx-scope": ["off"],
     "react/jsx-props-no-spreading": ["warn"],
     "react/require-default-props": ["warn"],
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "consistent-return": "warn"
   }
 }

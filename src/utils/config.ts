@@ -1,4 +1,4 @@
-const SERVER = process.env.REACT_APP_API_URL;
+const SERVER = 'https://static.adbrix.io/front/coding-test';
 
 export const DAILY_API = `${SERVER}/event_1.json`;
 export const REFERER_API = `${SERVER}/event_3.json`;

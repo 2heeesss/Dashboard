@@ -37,16 +37,16 @@ const ButtonContainer = styled.div`
 
 const GridContainer = styled.div`
   background-color: gainsboro;
-  width: 100%;
+  width: 1200px;
 `;
 
 function Dashboard() {
   const [layout, setLayout] = useState([
     { i: 'connectionUser', x: 0, y: 0, w: 5, h: 5, minH: 4, minW: 3 },
     { i: 'connectionCnt', x: 5, y: 0, w: 5, h: 5, minH: 4, minW: 3 },
-    { i: 'serial', x: 10, y: 5, w: 6, h: 10, minH: 4, minW: 6 },
-    { i: 'pie', x: 0, y: 5, w: 6, h: 10, minH: 9, minW: 4 },
-    { i: 'table', x: 0, y: 5, w: 6, h: 10, minH: 9, minW: 4 },
+    { i: 'serial', x: 0, y: 5, w: 10, h: 8, minH: 4, minW: 6 },
+    { i: 'pie', x: 0, y: 13, w: 5, h: 9, minH: 9, minW: 4 },
+    { i: 'table', x: 5, y: 13, w: 5, h: 9, minH: 9, minW: 4 },
   ]);
 
   const columns = useMemo(

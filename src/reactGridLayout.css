@@ -3,6 +3,7 @@
 
 .react-grid-item.react-grid-placeholder {
   background: steelblue;
+  border: 1px solid blue;
 }
 
 .react-resizable-handle {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import GridLayout from 'react-grid-layout';
 
 import styled from 'styled-components';
@@ -9,6 +9,17 @@ import TableWidget from '../modules/TableWidget';
 import useFetch from '../../hooks/useFetch';
 import Report from '../../utils/report';
 import { COUNTRY_API } from '../../utils/config';
+import Button from '../atoms/Button';
+
+interface Layout {
+  i: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  minH: number;
+  minW: number;
+}
 
 const WidgetContainer = styled.div`
   background-color: white;
@@ -18,14 +29,26 @@ const WidgetContainer = styled.div`
   display: flex;
 `;
 
+const ButtonContainer = styled.div`
+  width: 100%;
+  height: 50px;
+  padding: 15px;
+`;
+
+const GridContainer = styled.div`
+  background-color: gainsboro;
+  width: 100%;
+`;
+
 function Dashboard() {
-  const layout = [
+  const [layout, setLayout] = useState([
     { i: 'connectionUser', x: 0, y: 0, w: 5, h: 5, minH: 4, minW: 3 },
     { i: 'connectionCnt', x: 5, y: 0, w: 5, h: 5, minH: 4, minW: 3 },
     { i: 'serial', x: 10, y: 5, w: 6, h: 10, minH: 4, minW: 6 },
     { i: 'pie', x: 0, y: 5, w: 6, h: 10, minH: 9, minW: 4 },
     { i: 'table', x: 0, y: 5, w: 6, h: 10, minH: 9, minW: 4 },
-  ];
+  ]);
+
   const columns = useMemo(
     () => [
       {
@@ -48,27 +71,65 @@ function Dashboard() {
     tableData = myReport.getChartData();
   }
 
+  const getLayout = () => {
+    const savedLayouts = localStorage.getItem('grid-layout');
+    return savedLayouts ? JSON.parse(savedLayouts) : layout;
+  };
+
+  const storeLayoutHandler = () => {
+    localStorage.setItem('grid-layout', JSON.stringify(layout));
+  };
+
+  const removeLayout = () => {
+    localStorage.removeItem('grid-layout');
+  };
+
+  const onLayoutChangeHandler = (currentLayout: Layout[]) => {
+    setLayout(currentLayout);
+  };
+
   return (
     <div>
-      <GridLayout layout={layout} cols={12} rowHeight={30} width={1200}>
-        <WidgetContainer key="connectionUser">
-          <SummaryWidget connectionType="user" />
-        </WidgetContainer>
+      <ButtonContainer>
+        <Button borderRadius="30" clickHandler={removeLayout}>
+          편집 취소
+        </Button>
+        <Button
+          borderRadius="30"
+          backgroundColor="steelblue"
+          margin="20px"
+          clickHandler={storeLayoutHandler}
+        >
+          편집 완료
+        </Button>
+      </ButtonContainer>
+      <GridContainer>
+        <GridLayout
+          layout={getLayout()}
+          cols={12}
+          rowHeight={30}
+          width={1200}
+          onLayoutChange={onLayoutChangeHandler}
+        >
+          <WidgetContainer key="connectionUser">
+            <SummaryWidget connectionType="user" />
+          </WidgetContainer>
 
-        <WidgetContainer key="connectionCnt">
-          <SummaryWidget connectionType="access" />
-        </WidgetContainer>
+          <WidgetContainer key="connectionCnt">
+            <SummaryWidget connectionType="access" />
+          </WidgetContainer>
 
-        <WidgetContainer key="serial">
-          <SerialChartWidget />
-        </WidgetContainer>
-        <WidgetContainer key="pie">
-          <PieChartWidget />
-        </WidgetContainer>
-        <WidgetContainer key="table">
-          {tableData && <TableWidget columns={columns} data={tableData} />}
-        </WidgetContainer>
-      </GridLayout>
+          <WidgetContainer key="serial">
+            <SerialChartWidget />
+          </WidgetContainer>
+          <WidgetContainer key="pie">
+            <PieChartWidget />
+          </WidgetContainer>
+          <WidgetContainer key="table">
+            {tableData && <TableWidget columns={columns} data={tableData} />}
+          </WidgetContainer>
+        </GridLayout>
+      </GridContainer>
     </div>
   );
 }

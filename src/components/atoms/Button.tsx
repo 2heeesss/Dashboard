@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
-interface TextProps {
+interface ButtonProps {
   weight?: string;
   color?: string;
   size?: string;
@@ -9,10 +9,10 @@ interface TextProps {
   backgroundColor?: string;
   margin?: string;
   children: JSX.Element | string;
-  clickHandler: EventListener;
+  clickHandler?: MouseEventHandler<HTMLButtonElement>;
 }
 
-const StyledButton = styled.button<TextProps>`
+const StyledButton = styled.button<ButtonProps>`
   font-weight: ${(props) => props.weight};
   font-size: ${(props) => props.size};
   color: ${(props) => props.color};
@@ -30,7 +30,7 @@ function Button({
   margin = '0',
   children,
   clickHandler,
-}: TextProps) {
+}: ButtonProps) {
   return (
     <StyledButton
       weight={weight}

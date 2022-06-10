@@ -3,8 +3,6 @@ import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import styled from 'styled-components';
 import Text from '../atoms/Text';
 
-type Column = { Header: string; accessor: string };
-
 interface CityData {
   city: string;
   cityCnt: number;
@@ -13,13 +11,13 @@ interface CityData {
 interface RegionData {
   region: string;
   regionCnt: number;
-  children: CityData[];
+  children?: CityData[];
 }
 
 export interface Data {
   country: string;
   countryCnt: number;
-  children: RegionData[];
+  children?: RegionData;
 }
 
 const TableContainer = styled.div`
@@ -30,7 +28,7 @@ const TableContainer = styled.div`
   padding: 15px;
 `;
 
-function TableWidget({ columns, data }: { columns: Column[]; data: Data[] }) {
+function TableWidget({ columns, data }: { columns: any[]; data: Data[] }) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data }, useGlobalFilter, useSortBy);
 

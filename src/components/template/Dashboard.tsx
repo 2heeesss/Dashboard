@@ -68,7 +68,7 @@ function Dashboard() {
   let tableData;
   if (data && !loading) {
     const myReport = new Report('Unique Event Count', data);
-    tableData = myReport.getChartData();
+    tableData = myReport.getTableData();
   }
 
   const getLayout = () => {
